@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>💻 Danh sách Snippet</h2>
+<ul class="list-group">
+  {% for snippet in snippets %}
+    <li class="list-group-item">
+      <a href="{{ url_for('snippets.detail', snippet_id=snippet.id) }}">
+        {{ snippet.title }} ({{ snippet.language }})
+      </a>
+    </li>
+  {% else %}
+    <li class="list-group-item">Chưa có snippet nào.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
