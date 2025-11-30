@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>🚀 Chào mừng đến với CodeShare</h1>
+  <p>Nơi bạn có thể tạo đề bài, chia sẻ code và học hỏi từ cộng đồng.</p>
+  <div class="actions">
+    {% if current_user.is_authenticated %}
+      <a class="btn primary" href="{{ url_for('problems.list_problems') }}">Xem đề bài</a>
+      <a class="btn" href="{{ url_for('problems.new_problem') }}">+ Tạo đề bài mới</a>
+    {% else %}
+      <a class="btn primary" href="{{ url_for('auth.register') }}">Đăng ký ngay</a>
+      <a class="btn" href="{{ url_for('auth.login') }}">Đăng nhập</a>
+    {% endif %}
+  </div>
+</section>
+
+<section class="features">
+  <div class="card">
+    <h3>👤 Tài khoản riêng</h3>
+    <p>Mỗi người có hồ sơ cá nhân để quản lý đề bài và code.</p>
+  </div>
+  <div class="card">
+    <h3>📚 Tạo đề bài</h3>
+    <p>Đăng đề bài để cộng đồng cùng giải và chia sẻ cách làm.</p>
+  </div>
+  <div class="card">
+    <h3>💻 Chia sẻ code</h3>
+    <p>Đăng snippet code với highlight đẹp, dễ đọc và dễ học.</p>
+  </div>
+</section>
+{% endblock %}
