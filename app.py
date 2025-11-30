@@ -40,6 +40,14 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+        # tạo admin mặc định nếu chưa có
+        if not User.query.filter_by(handle="admin").first():
+            admin = User(handle="admin", email="admin@example.com")
+            admin.set_password("admin123")  # mật khẩu mặc định, nên đổi sau khi deploy
+            db.session.add(admin)
+            db.session.commit()
+            print("✅ Admin account created: admin / admin123")
+
     return app
 
 app = create_app()
