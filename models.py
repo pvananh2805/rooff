@@ -1,23 +1,31 @@
-# models.py
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     handle = db.Column(db.String(32), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
     bio = db.Column(db.Text, default="")
+    role = db.Column(db.String(20), default="user")   # 👈 phân quyền
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     problems = db.relationship('Problem', backref='author', lazy=True)
     snippets = db.relationship('Snippet', backref='author', lazy=True)
 
-    def set_password(self, pwd): self.password_hash = generate_password_hash(pwd)
-    def check_password(self, pwd): return check_password_hash(self.password_hash, pwd)
+    def set_password(self, pwd):
+        self.password_hash = generate_password_hash(pwd)
+
+    def check_password(self, pwd):
+        return check_password_hash(self.password_hash, pwd)
+
+    def is_admin(self):
+        return self.role == "admin"
+
 
 class Problem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,6 +37,7 @@ class Problem(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     snippets = db.relationship('Snippet', backref='problem', lazy=True)
 
+
 class Snippet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(160), nullable=False)
@@ -38,6 +47,7 @@ class Snippet(db.Model):
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     problem_id = db.Column(db.Integer, db.ForeignKey('problem.id'), nullable=False)
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
