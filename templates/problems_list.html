@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Danh sách đề bài</h2>
+{% if current_user.is_authenticated %}
+  <a href="{{ url_for('problems.new_problem') }}">+ Tạo đề bài</a>
+{% endif %}
+<ul>
+  {% for p in items %}
+    <li>
+      <a href="{{ url_for('problems.detail', problem_id=p.id) }}">{{ p.title }}</a>
+      <p>{{ p.description[:150] }}...</p>
+    </li>
+  {% else %}
+    <p>Chưa có đề bài nào.</p>
+  {% endfor %}
+</ul>
+{% endblock %}

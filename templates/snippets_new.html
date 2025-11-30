@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Chia sẻ code cho: {{ problem.title }}</h2>
+<form method="post">
+  <label>Tiêu đề<input name="title" value="{{ item.title if item }}"></label>
+  <label>Ngôn ngữ<input name="language" value="{{ item.language if item }}"></label>
+  <label>Code<textarea name="code" rows="10">{{ item.code if item }}</textarea></label>
+  <button type="submit">Lưu</button>
+</form>
+{% endblock %}

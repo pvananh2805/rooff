@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ item.title }} <span>{{ item.language }}</span></h2>
+<pre><code class="language-{{ item.language|lower }}">{{ item.code | e }}</code></pre>
+<p>bởi {{ item.author.handle }} — {{ item.created_at.strftime("%Y-%m-%d") }}</p>
+{% endblock %}

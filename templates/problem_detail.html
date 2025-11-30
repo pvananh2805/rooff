@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+{% if edit %}
+  <h2>Tạo/Sửa đề bài</h2>
+  <form method="post">
+    <label>Tiêu đề<input name="title" value="{{ item.title if item }}"></label>
+    <label>Tags<input name="tags" value="{{ item.tags if item }}"></label>
+    <label>Mô tả<textarea name="description">{{ item.description if item }}</textarea></label>
+    <button type="submit">Lưu</button>
+  </form>
+{% else %}
+  <h2>{{ item.title }}</h2>
+  <p>{{ item.description }}</p>
+  {% if current_user.is_authenticated %}
+    <a href="{{ url_for('snippets.new', problem_id=item.id) }}">+ Đăng code cho đề này</a>
+  {% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Hồ sơ — {{ user.handle }}</h2>
+<p>{{ user.bio }}</p>
+<h3>Đề bài</h3>
+<ul>
+  {% for p in user.problems %}
+    <li><a href="{{ url_for('problems.detail', problem_id=p.id) }}">{{ p.title }}</a></li>
+  {% endfor %}
+</ul>
+<h3>Snippets</h3>
+<ul>
+  {% for s in user.snippets %}
+    <li><a href="{{ url_for('snippets.detail', snippet_id=s.id) }}">{{ s.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}
