@@ -7,23 +7,31 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body class="bg-light">
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
         <a class="navbar-brand" href="{{ url_for('home') }}">VanhCoding</a>
-        <div class="collapse navbar-collapse">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
+            <!-- Luôn có các mục chung -->
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('problems.list_problems') }}">📚 Đề bài</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('snippets.list_snippets') }}">💻 Snippet</a></li>
             {% if current_user.is_authenticated %}
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('user.profile', handle=current_user.handle) }}">👤 {{ current_user.handle }}</a></li>
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Đăng xuất</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('user.profile', handle=current_user.handle) }}">👤 Profile</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">🚪 Đăng xuất</a></li>
             {% else %}
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Đăng nhập</a></li>
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Đăng ký</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">🔑 Đăng nhập</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">📝 Đăng ký</a></li>
             {% endif %}
           </ul>
         </div>
       </div>
     </nav>
 
+    <!-- Nội dung -->
     <main class="container py-4">
       {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -37,6 +45,7 @@
       {% block content %}{% endblock %}
     </main>
 
+    <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3 mt-5">
       <small>© 2025 VanhCoding</small>
     </footer>
