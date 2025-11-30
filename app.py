@@ -5,6 +5,7 @@ from models import db, User
 from auth.routes import auth_bp
 from problems.routes import problems_bp
 from snippets.routes import snippets_bp
+from user.routes import user_bp   # import ở đây
 import os
 
 def create_app():
@@ -26,6 +27,7 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(problems_bp, url_prefix='/problems')
     app.register_blueprint(snippets_bp, url_prefix='/snippets')
+    app.register_blueprint(user_bp, url_prefix='/user')   # 👈 đăng ký ở đây
 
     # inject current_user vào template
     @app.context_processor
@@ -42,7 +44,7 @@ def create_app():
 
         # tạo admin mặc định nếu chưa có
         if not User.query.filter_by(handle="admin").first():
-            admin = User(handle="admin", email="admin@example.com")
+            admin = User(handle="admin", email="admin@example.com", role="admin")
             admin.set_password("admin123")  # mật khẩu mặc định, nên đổi sau khi deploy
             db.session.add(admin)
             db.session.commit()
