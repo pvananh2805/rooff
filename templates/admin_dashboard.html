@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>⚙️ Admin Dashboard</h2>
+<p>Chào {{ current_user.handle }}! Bạn có quyền quản trị.</p>
+<ul>
+  <li>Quản lý người dùng</li>
+  <li>Quản lý đề bài</li>
+  <li>Quản lý snippet</li>
+</ul>
+{% endblock %}
