@@ -1,19 +1,29 @@
-@auth_bp.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        handle = request.form.get("handle")
-        email = request.form.get("email")
-        pwd = request.form.get("password")
-        if not handle or not email or not pwd:
-            flash("Điền đầy đủ thông tin.")
-            return render_template("auth_register.html")
-        if User.query.filter((User.handle==handle)|(User.email==email)).first():
-            flash("Handle hoặc email đã tồn tại.")
-            return render_template("auth_register.html")
-        user = User(handle=handle, email=email)
-        user.set_password(pwd)
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        return redirect(url_for("problems.list_problems"))
-    return render_template("auth_register.html")
+{% extends "base.html" %}
+{% block content %}
+<h2>📝 Đăng ký tài khoản</h2>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flash">
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<form method="post" class="form">
+  <label>Handle
+    <input name="handle" placeholder="vd: vanhdev" required>
+  </label>
+  <label>Email
+    <input type="email" name="email" placeholder="vd: vanh@example.com" required>
+  </label>
+  <label>Mật khẩu
+    <input type="password" name="password" required>
+  </label>
+  <button class="btn primary" type="submit">Tạo tài khoản</button>
+</form>
+
+<p>Đã có tài khoản? <a href="{{ url_for('auth.login') }}">Đăng nhập</a></p>
+{% endblock %}
