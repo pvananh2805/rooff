@@ -5,7 +5,7 @@ from models import db, User
 from auth.routes import auth_bp
 from problems.routes import problems_bp
 from snippets.routes import snippets_bp
-from user.routes import user_bp   # import ở đây
+from user.routes import user_bp
 import os
 
 def create_app():
@@ -27,7 +27,7 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(problems_bp, url_prefix='/problems')
     app.register_blueprint(snippets_bp, url_prefix='/snippets')
-    app.register_blueprint(user_bp, url_prefix='/user')   # 👈 đăng ký ở đây
+    app.register_blueprint(user_bp, url_prefix='/user')
 
     # inject current_user vào template
     @app.context_processor
