@@ -1,17 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Hồ sơ — {{ user.handle }}</h2>
-<p>{{ user.bio }}</p>
-<h3>Đề bài</h3>
+<h2>👤 Hồ sơ của {{ user.handle }}</h2>
+<p>Email: {{ user.email }}</p>
+<p>Bio: {{ user.bio or "Chưa có mô tả" }}</p>
+<p>Vai trò: {{ user.role }}</p>
+<p>Ngày tạo: {{ user.created_at.strftime("%d/%m/%Y") }}</p>
+
+<h3>📚 Các đề bài đã đăng</h3>
 <ul>
-  {% for p in user.problems %}
-    <li><a href="{{ url_for('problems.detail', problem_id=p.id) }}">{{ p.title }}</a></li>
+  {% for problem in user.problems %}
+    <li><a href="{{ url_for('problems.detail', problem_id=problem.id) }}">{{ problem.title }}</a></li>
+  {% else %}
+    <li>Chưa có đề bài nào.</li>
   {% endfor %}
 </ul>
-<h3>Snippets</h3>
+
+<h3>💻 Các snippet đã đăng</h3>
 <ul>
-  {% for s in user.snippets %}
-    <li><a href="{{ url_for('snippets.detail', snippet_id=s.id) }}">{{ s.title }}</a></li>
+  {% for snippet in user.snippets %}
+    <li><a href="{{ url_for('snippets.detail', snippet_id=snippet.id) }}">{{ snippet.title }}</a></li>
+  {% else %}
+    <li>Chưa có snippet nào.</li>
   {% endfor %}
 </ul>
 {% endblock %}
