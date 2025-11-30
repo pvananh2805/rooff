@@ -1,26 +1,39 @@
 {% extends "base.html" %}
+{% block title %}Profile{% endblock %}
 {% block content %}
-<h2>👤 Hồ sơ của {{ user.handle }}</h2>
-<p>Email: {{ user.email }}</p>
-<p>Bio: {{ user.bio or "Chưa có mô tả" }}</p>
-<p>Vai trò: {{ user.role }}</p>
-<p>Ngày tạo: {{ user.created_at.strftime("%d/%m/%Y") }}</p>
+<div class="card shadow">
+  <div class="card-body">
+    <h2 class="card-title">👤 {{ user.handle }}</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Bio:</strong> {{ user.bio or "Chưa có mô tả" }}</p>
+    <p><strong>Vai trò:</strong> {{ user.role }}</p>
+    <p><strong>Ngày tạo:</strong> {{ user.created_at.strftime("%d/%m/%Y") }}</p>
+  </div>
+</div>
 
-<h3>📚 Các đề bài đã đăng</h3>
-<ul>
-  {% for problem in user.problems %}
-    <li><a href="{{ url_for('problems.detail', problem_id=problem.id) }}">{{ problem.title }}</a></li>
-  {% else %}
-    <li>Chưa có đề bài nào.</li>
-  {% endfor %}
-</ul>
+<div class="mt-4">
+  <h4>📚 Đề bài đã đăng</h4>
+  <ul class="list-group">
+    {% for problem in user.problems %}
+      <li class="list-group-item">
+        <a href="{{ url_for('problems.detail', problem_id=problem.id) }}">{{ problem.title }}</a>
+      </li>
+    {% else %}
+      <li class="list-group-item">Chưa có đề bài nào.</li>
+    {% endfor %}
+  </ul>
+</div>
 
-<h3>💻 Các snippet đã đăng</h3>
-<ul>
-  {% for snippet in user.snippets %}
-    <li><a href="{{ url_for('snippets.detail', snippet_id=snippet.id) }}">{{ snippet.title }}</a></li>
-  {% else %}
-    <li>Chưa có snippet nào.</li>
-  {% endfor %}
-</ul>
+<div class="mt-4">
+  <h4>💻 Snippet đã đăng</h4>
+  <ul class="list-group">
+    {% for snippet in user.snippets %}
+      <li class="list-group-item">
+        <a href="{{ url_for('snippets.detail', snippet_id=snippet.id) }}">{{ snippet.title }}</a>
+      </li>
+    {% else %}
+      <li class="list-group-item">Chưa có snippet nào.</li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}
